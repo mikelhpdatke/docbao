@@ -1,30 +1,10 @@
 running_path: ~/docbao_test/
 max_crawler: 14
 crawling_list:
-    - Báo mới:
-        web_url: https://baomoi.com
-        crawl_url: "https://baomoi.com"
-        url_pattern_re: (http|https)://baomoi.com
-        language: vietnamese 
-        get_topic_from_link: True 
-        skip_checking_topic_length: False 
-        topic_tag:
-        topic_class: 
-        topic_id:  
-        topic_re: "(.+)"
-        get_publish_date_as_crawl_date: True
-        date_tag:
-        date_class:
-            - divDetail_DateCreate
-        date_re: (\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4} - \d{1,2}:\d{1,2})
-        date_pattern: "%d/%m/%Y - %H:%M" 
-        output_html : False
-        use_browser : True
-        display_browser: false
-    - Tuổi trẻ:
-        web_url: https://tuoitre.vn
-        crawl_url: "https://tuoitre.vn"
-        url_pattern_re: (http|https)://tuoitre.vn
+    - Báo Thái Bình:
+        web_url: https://baothaibinh.com.vn/
+        crawl_url: "https://baothaibinh.com.vn/chuyen-muc/1/chinh-tri"
+        url_pattern_re: (http|https)://baothaibinh.com.vn/
         language: vietnamese 
         get_topic_from_link: True 
         skip_checking_topic_length: False 
@@ -89,7 +69,7 @@ category_list:
         index: 15
 waiting_time_between_each_crawl: 5
 maximum_url_to_visit_each_turn: 10
-minimum_topic_length: 4
+minimum_topic_length: 50
 days_to_crawl: 30
 number_of_hot_keywords: 2000
 number_of_trending_keywords: 25
