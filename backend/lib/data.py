@@ -460,8 +460,9 @@ class ArticleManager:
             else:
                 print("Crawler pid %s: Can't open: %s" % (my_pid, webname))
             a=False
-        except:
+        except ValueError:
             print("Crawler pid %s: Can't open: %s" % (my_pid, webname))
+            print(ValueError)
 
     def is_not_outdated(self, date):
         return (datetime.now() - date).days <= self._config_manager.get_maximum_day_difference()

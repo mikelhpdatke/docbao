@@ -9,7 +9,7 @@ print("Test 1: check if Firefox, Geckodrive and Selenium are installed ok")
 
 web_crawler.load_page("http://dantri.com.vn", 2, 0.5)
 title = web_crawler.get_title()
-
+print(title)
 if "Dân trí" in title:
     print("Result: OK")
 else:
