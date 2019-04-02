@@ -21,7 +21,7 @@ crawling_list:
         output_html : False
         use_browser : True
         browser_timeout: 100
-        display_browser: True
+        display_browser: False
     - Báo Thái Bình:
         web_url: https://baothaibinh.com.vn
         crawl_url: https://baothaibinh.com.vn
@@ -42,7 +42,7 @@ crawling_list:
         output_html : False
         use_browser : True
         browser_timeout: 100
-        display_browser: True
+        display_browser: False
 category_list:
     - Chính Trị:
         filename: category/chinh_tri.txt
