@@ -9,7 +9,6 @@ import time
 from datetime import datetime
 from collections import deque # a queue that keep n-last-added item, use for keyword frequent data
 import sys
-import logging
 
 
 # GLOBAL VARIABLES
@@ -269,7 +268,8 @@ class ArticleManager:
         if datetag is not None:
             for tag in datetag:
                 for foundtag in soup.find_all(tag):
-                    tagstring = str(foundtag) # Get all html of tag
+                    tagstring = foundtag.get_text() # Get all html of tag
+                    print('TagString... %s' % tagstring)
                     # for tagstring in foundtag.contents:
                     searchobj = filter.search(str(tagstring))
                     if searchobj:
@@ -279,13 +279,10 @@ class ArticleManager:
                             print("Warning: published date %s is not in %s pattern" % (searchobj.group(1), date_pattern))
                             return datetime.now()
         else:
-            logging.warning(dateclass)
             for date in dateclass:
-                # logging.warning(soup.find_all(class_=date))
                 for foundtag in soup.find_all(class_=date):
                     tagstring = foundtag.get_text() # Get all html of tag
-                    tagstring = re.sub(r' [\|\,] ', ' ',tagstring)
-                    logging.warning(tagstring)
+                    print('TagString... %s' % tagstring)
                     #for tagstring in foundtag.contents:
                     searchobj = filter.search(str(tagstring))
                     if searchobj:
@@ -319,7 +316,7 @@ class ArticleManager:
         use_browser= webconfig.get_use_browser()
         topic = ""
         topic_word_list = []
-
+        
         if(webconfig.get_topic_from_link()):
             topic = str(atag.string).strip() # str() is very important !. atag.string is not string and can cause error in jsonpickle
             print("Topic found: %s" % topic)
@@ -343,8 +340,7 @@ class ArticleManager:
             else:
                 # try to find published date
                 newsdate = self.get_time_of_an_url(fullurl, webconfig, soup=soup,browser=browser) 
-            logging.warning(newsdate)
-            logging.warning(self.get_time_of_an_url(fullurl, webconfig, soup=soup,browser=browser))
+
             if (newsdate is not None): # found an article
                 if self.is_not_outdated(newsdate) or webconfig.get_skip_crawl_publish_date():
                     return (topic, newsdate) 
@@ -416,7 +412,6 @@ class ArticleManager:
                     ataglist = soup.find_all("a", href=True)
                    
                 print("Crawler pid %s: Getting data, please wait..." % my_pid)
-                print(ataglist)
                 for atag in ataglist:
                     # loc ket qua
                     fullurl = get_fullurl(weburl, atag['href'])
@@ -429,10 +424,9 @@ class ArticleManager:
                             # check if fullurl satisfies url pattern
                             filter = re.compile(webconfig.get_url_pattern_re(), re.IGNORECASE)
                             if filter.match(fullurl) is None:
-                                pass
-                                # print("Crawler pid %s: Ignore. This url is from another site" % my_pid)
+                                print("Crawler pid %s: Ignore. This url is from another site" % my_pid)
                             else:
-                                print('valid %s' % fullurl)
+    
                                 count_visit +=1
                                 result = self.investigate_if_link_is_valid_article(atag, webconfig, browser)
                                 if result is not None: # is valid article 
@@ -468,9 +462,8 @@ class ArticleManager:
             else:
                 print("Crawler pid %s: Can't open: %s" % (my_pid, webname))
             a=False
-        except ValueError:
+        except:
             print("Crawler pid %s: Can't open: %s" % (my_pid, webname))
-            print(ValueError)
 
     def is_not_outdated(self, date):
         return (datetime.now() - date).days <= self._config_manager.get_maximum_day_difference()
