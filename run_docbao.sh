@@ -17,6 +17,6 @@ while true; do
     rclone copy -v ~/$local_dir/backend/export $remote_dir:export	
     killall -9 firefox
     killall geckodriver
-    echo "stop docbao, sleep 5s"
-    sleep 5
+    echo "stop docbao, sleep 50s"
+    sleep 50
 done
