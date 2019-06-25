@@ -528,6 +528,7 @@ class KeywordManager:
         count = 0
         hot_dict = dict()
         print("Write Trending keyword to file")
+        print(tag_list)
         with open_utf8_file_to_write(get_independent_os_path(["export","trending_keyword.json"])) as stream:
             for keyword, freq in tag_list: 
                 if keyword.strip() not in self.stopwords:
